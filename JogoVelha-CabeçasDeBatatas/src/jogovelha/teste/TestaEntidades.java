@@ -46,7 +46,7 @@ public class TestaEntidades {
         
         tab.mostrarNaConsole();
         
-        System.out.println("Tabela está cheia: " + tab.cheio());        
+        System.out.println("Tabela está cheia: " + tab.cheio());
     }
     
 }
