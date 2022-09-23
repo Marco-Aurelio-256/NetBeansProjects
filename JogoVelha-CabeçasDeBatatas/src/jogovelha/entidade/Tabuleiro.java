@@ -20,8 +20,6 @@ public final class Tabuleiro {
         for(int x = 0; x <= 2; x++){
             for(int y = 0; y <= 2; y++){
                 matrizControle[x][y] = new Jogador();
-                System.out.println(x);
-                System.out.println(y);
                 
             }
         }
