@@ -21,17 +21,16 @@ public class Jogador {
     }
     
     public void mostrarNaConsole(){
-        System.out.println(
-            String.format(
+        System.out.printf(
                 """
                 ==JOGADOR==
-                ID: %d
+                ID: %d               
                 Nome: %s                
                 ==========
+                
                 """,
                 this.id,
                 this.nome
-            )
         );
     }
 

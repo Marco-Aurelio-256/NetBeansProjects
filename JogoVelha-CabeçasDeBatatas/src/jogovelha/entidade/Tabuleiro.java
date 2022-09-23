@@ -25,7 +25,7 @@ public final class Tabuleiro {
         }
     }
     
-    public void registrarJogada(Jogada jogada) {
+    public void registrarJogada(Jogada jogada) throws Exception {
         try{
             int linha = jogada.getLinha();
             int coluna = jogada.getColuna();
@@ -35,10 +35,10 @@ public final class Tabuleiro {
                 matrizControle[linha][coluna] = jogador;
 
             } else {
-                System.err.println("Posição da jogada já está registrada!");
+                throw new Exception("Posição da jogada já está registrada!");
             }  
         } catch(Exception e) {
-            System.err.println("Erro ao registrar jogada no tabuleiro");
+            throw new Exception("Erro ao registrar jogada no tabuleiro");
         }
     }
     
