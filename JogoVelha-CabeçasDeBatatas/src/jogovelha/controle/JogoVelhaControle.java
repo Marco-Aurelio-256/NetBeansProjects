@@ -6,6 +6,7 @@ package jogovelha.controle;
 
 import jogovelha.entidade.Jogador;
 import jogovelha.entidade.Tabuleiro;
+import jogovelha.entidade.Jogada;
 
 /**
  *
@@ -21,16 +22,16 @@ public class JogoVelhaControle {
     private Jogador jogador2;
     private Jogador ganhador;
     private int estadoPartida;
-    private String[][] resultadosAnteriores = new String[1000][2];
+    private String[][] resultadosAnteriores;
     
     public JogoVelhaControle(){
         this.numPartida = 0;
-        this.tabuleiro = 0;
-        this.jogador1 = 0;
-        this.jogador2 = 0;
-        this.ganhador = 0;
-        this.estadoPartida = 0;
-        this.resultadosAnteriores = 0;
+        this.tabuleiro = new Tabuleiro();
+        this.jogador1 = new Jogador();
+        this.jogador2 = new Jogador();
+        this.ganhador = new Jogador();
+        this.estadoPartida = PARTIDA_PARADA;
+        this.resultadosAnteriores = new String[1000][2];
         
     }
 
@@ -44,6 +45,34 @@ public class JogoVelhaControle {
 
     public Tabuleiro getTabuleiro() {
         return tabuleiro;
+    }
+    
+    public void iniciarPartida(Jogador j1, Jogador j2) throws Exception{
+        if(j1.getId() != 0 && j2.getId() != 0){
+            if(estadoPartida != PARTIDA_PARADA){
+                ganhador = new Jogador();
+                jogador1 = j1;
+                jogador2 = j2;
+                estadoPartida = PARTIDA_INICIADA;
+                numPartida++;
+                tabuleiro.limpar();
+                
+            } else {
+                throw new Exception("Falha ao iniciar a partida. Uma partida já está em andamento!");
+                
+            }
+        } else {
+            throw new Exception("Falha ao iniciar a partida. Os jogadores não estão definidos corretamente!");
+            
+        }
+    }
+    
+    public void realizarJogada(Jogada jgd) throws Exception{
+        if(estadoPartida == PARTIDA_INICIADA){
+            tabuleiro.registrarJogada(jgd);
+        } else {
+            throw new Exception("Não é possível fazer uma jogada fora de uma partida!");
+        }
     }
 
     public void setTabuleiro(Tabuleiro tabuleiro) {
