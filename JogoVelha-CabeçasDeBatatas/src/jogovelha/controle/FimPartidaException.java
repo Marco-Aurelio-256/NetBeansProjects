@@ -11,13 +11,9 @@ import jogovelha.entidade.Jogador;
  * @author Aluno
  */
 public class FimPartidaException extends Exception {
-    private Jogador ganhador;
-    
     public FimPartidaException(){
         super("O jogo não teve vencedor. Ambos foram vitoriosos!");
-        
-        this.ganhador = new Jogador();
-        
+            
     }
     
     public FimPartidaException(Jogador ganhador){
@@ -28,5 +24,6 @@ public class FimPartidaException extends Exception {
                 """,
                 ganhador.getNome()
             ));
+        
     }
 }

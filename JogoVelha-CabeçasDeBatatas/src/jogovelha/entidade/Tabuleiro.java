@@ -29,7 +29,7 @@ public final class Tabuleiro {
         try{
             int linha = jogada.getLinha();
             int coluna = jogada.getColuna();
-            Jogador jogador = jogada.getJog();
+            Jogador jogador = jogada.getJogador();
 
             if(matrizControle[linha][coluna].getId() == 0){
                 matrizControle[linha][coluna] = jogador;
