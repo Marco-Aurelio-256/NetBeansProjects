@@ -19,6 +19,7 @@ public class TestaEntidades {
         Jogador jog2 = new Jogador();
         Jogador jog3 = new Jogador();
         
+        
         System.out.println(jog3.getNome());
         
         jog1.setNome("Salve");

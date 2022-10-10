@@ -337,7 +337,8 @@ public class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         try{
-            iniciarPartida(); 
+            iniciarPartida();
+            
         } catch(Exception e){
             JOptionPane.showMessageDialog(
                     null, 

@@ -19,7 +19,7 @@ public final class Tabuleiro {
     public void limpar() {
         for(int x = 0; x <= 2; x++){
             for(int y = 0; y <= 2; y++){
-                matrizControle[x][y] = new Jogador();
+                matrizControle[y][x] = new Jogador();
                 
             }
         }
@@ -51,7 +51,7 @@ public final class Tabuleiro {
         
         for(int x = 0; x <= 2; x++){
             for(int y = 0; y <= 2; y++){
-                if(matrizControle[x][y].getId() != 0) {
+                if(matrizControle[y][x].getId() == 0) {
                     result = false;
                 }
             }

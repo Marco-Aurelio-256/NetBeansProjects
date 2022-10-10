@@ -36,18 +36,6 @@ public class JogoVelhaControle {
 
     }
 
-    public int getNumPartida() {
-        return numPartida;
-    }
-
-    public void setNumPartida(int numPartida) {
-        this.numPartida = numPartida;
-    }
-
-    public Tabuleiro getTabuleiro() {
-        return tabuleiro;
-    }
-
     public void iniciarPartida(Jogador j1, Jogador j2) throws Exception {
         if (j1.getId() != 0 && j2.getId() != 0) {
             if (estadoPartida == PARTIDA_PARADA) {
@@ -152,6 +140,10 @@ public class JogoVelhaControle {
                 throw new FimPartidaException(ganhador);
             }
             
+            if(tabuleiro.cheio()){
+                throw new FimPartidaException();
+            }
+            
             
 
         } else {
@@ -192,10 +184,10 @@ public class JogoVelhaControle {
                 """
                       |      |     
                   %s  |  %s  |  %s  
-                _____ |_____ |_____
+                ______|______|______
                       |      |     
                   %s  |  %s  |  %s  
-                _____ |_____ |_____
+                ______|______|______
                       |      |     
                   %s  |  %s  |  %s  
                       |      |     
@@ -227,7 +219,19 @@ public class JogoVelhaControle {
                 ganhador.getNome(),
                 estadoPartida);
         
-        System.out.print(tabela + informacao);
+        System.out.print(informacao + tabela);
+    }
+    
+    public int getNumPartida() {
+        return numPartida;
+    }
+
+    public void setNumPartida(int numPartida) {
+        this.numPartida = numPartida;
+    }
+
+    public Tabuleiro getTabuleiro() {
+        return tabuleiro;
     }
 
     public void setTabuleiro(Tabuleiro tabuleiro) {
