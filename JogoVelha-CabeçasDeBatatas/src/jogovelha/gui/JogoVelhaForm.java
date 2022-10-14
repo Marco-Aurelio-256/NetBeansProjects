@@ -4,14 +4,30 @@
  */
 package jogovelha.gui;
 
+import java.util.Random;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import jogovelha.controle.JogoVelhaControle;
+import jogovelha.entidade.Jogada;
+import jogovelha.entidade.Jogador;
 
 /**
  *
  * @author Marco
  */
-public class JogoVelhaForm extends javax.swing.JFrame {
-
+public final class JogoVelhaForm extends javax.swing.JFrame {
+    JogoVelhaControle jvc = new JogoVelhaControle();
+    Jogador j1 = new Jogador();
+    Jogador j2 = new Jogador();
+    
+    Random rd = new Random();
+    /**
+     * @param vezJogador
+     * true = Jogador X
+     * false = Jogador O
+     */
+    Boolean vezJogador;
+    
     /**
      * Creates new form JogoVelhaForm
      * @throws java.lang.Exception
@@ -19,14 +35,133 @@ public class JogoVelhaForm extends javax.swing.JFrame {
     
     public void iniciarPartida() throws Exception{
         if(!txtJogador1.getText().isEmpty() && !txtJogador2.getText().isEmpty()){
-            //Inicia partida
+            j1.setId(1);
+            j1.setNome(txtJogador1.getText());
+            j2.setId(2);
+            j2.setNome(txtJogador2.getText());
+            
+            jvc.iniciarPartida(j1, j2);
+            
+            vezJogador = rd.nextBoolean();
+            if(vezJogador) {
+                lblMensagem.setText("É a vez do Jogador X");
+            } else {
+                lblMensagem.setText("É a vez do Jogador O");
+            }
+            
+            lblNumPartida.setText(jvc.getNumPartida()+"° partida");
+            
+            btnIniciar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            txtJogador1.setEnabled(false);
+            txtJogador2.setEnabled(false);
+            
+            definirTabela(true);
+            
+            
+            
         } else {
             throw new Exception("É necessário preencher os dois campos de nome!");
         }
     }
     
+    public void realizarJogada(int l, int c, int btn) throws Exception{
+        String atualJogador;
+        String proximoJogador;
+        Jogada jgd;
+        
+        if(vezJogador) {
+            jgd = new Jogada(l, c, j1);
+            atualJogador = "X";
+            proximoJogador = "O";
+        } else {
+            jgd = new Jogada(l, c, j2);
+            atualJogador = "O";
+            proximoJogador = "X";
+        }
+        
+        if(jvc.getTabuleiro().obterJogador(l, c).getId() == 0) {
+            switch(btn) {
+                case 1 -> btn00.setText(atualJogador);
+                case 2 -> btn01.setText(atualJogador);
+                case 3 -> btn02.setText(atualJogador);
+                case 4 -> btn10.setText(atualJogador);
+                case 5 -> btn11.setText(atualJogador);
+                case 6 -> btn12.setText(atualJogador);
+                case 7 -> btn20.setText(atualJogador);
+                case 8 -> btn21.setText(atualJogador);
+                case 9 -> btn22.setText(atualJogador);              
+
+            }
+        }
+    
+        jvc.realizarJogada(jgd);
+        vezJogador = !vezJogador;
+        lblMensagem.setText("É a vez do Jogador " + proximoJogador);
+        
+    }
+    
     public JogoVelhaForm() {
         initComponents();
+        definirTabela(false);
+        
+    }
+    
+    public void definirTabela(Boolean estado) {
+        btn00.setEnabled(estado);
+        btn01.setEnabled(estado);
+        btn02.setEnabled(estado);
+        btn10.setEnabled(estado);
+        btn11.setEnabled(estado);
+        btn12.setEnabled(estado);
+        btn20.setEnabled(estado);
+        btn21.setEnabled(estado);
+        btn22.setEnabled(estado);
+        
+        if(!estado == false) {
+            btn00.setText("");
+            btn01.setText("");
+            btn02.setText("");
+            btn10.setText("");
+            btn11.setText("");
+            btn12.setText("");
+            btn20.setText("");
+            btn21.setText("");
+            btn22.setText("");
+        }
+        
+    }
+    
+    public void finalizarPartida() {
+        DefaultTableModel model = (DefaultTableModel) tblResultados.getModel();
+        String[][] resultadosAnteriores = jvc.getResultadosAnteriores();
+        model.setRowCount(0);
+        
+        int i = 0;
+        Boolean continuarResultados = true;
+        
+        while(continuarResultados){
+            if(resultadosAnteriores[i][1] != null){
+                model.addRow(new Object[]{
+                    i+1,
+                    resultadosAnteriores[i][0],
+                    resultadosAnteriores[i][1]
+                    });
+                
+                i++;
+            } else {
+                continuarResultados = false;
+            }
+                
+        }
+        
+        lblMensagem.setText("Fim da partida!");
+        
+        definirTabela(false);
+        txtJogador1.setEnabled(true);
+        txtJogador2.setEnabled(true);
+        btnIniciar.setEnabled(true);
+        btnCancelar.setEnabled(false);
         
     }
 
@@ -111,15 +246,11 @@ public class JogoVelhaForm extends javax.swing.JFrame {
         lblDefPartida.setText("Definição da Partida");
 
         lblNumPartida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblNumPartida.setText("n° partida");
         lblNumPartida.setToolTipText("");
 
         tblResultados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Partida", "Jogador 1", "Jogador 2"
@@ -145,6 +276,7 @@ public class JogoVelhaForm extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -166,40 +298,86 @@ public class JogoVelhaForm extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(0, 51, 51));
         jPanel1.setToolTipText("");
 
-        btn22.setForeground(new java.awt.Color(255, 255, 255));
+        btn22.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn22.setBorderPainted(false);
         btn22.setFocusable(false);
+        btn22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn22ActionPerformed(evt);
+            }
+        });
 
-        btn12.setForeground(new java.awt.Color(255, 255, 255));
+        btn12.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn12.setBorderPainted(false);
         btn12.setFocusable(false);
+        btn12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn12ActionPerformed(evt);
+            }
+        });
 
-        btn02.setForeground(new java.awt.Color(255, 255, 255));
+        btn02.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn02.setBorderPainted(false);
         btn02.setFocusable(false);
+        btn02.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn02ActionPerformed(evt);
+            }
+        });
 
-        btn01.setForeground(new java.awt.Color(255, 255, 255));
+        btn01.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn01.setBorderPainted(false);
         btn01.setFocusable(false);
+        btn01.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn01ActionPerformed(evt);
+            }
+        });
 
-        btn11.setForeground(new java.awt.Color(255, 255, 255));
+        btn11.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn11.setBorderPainted(false);
         btn11.setFocusable(false);
+        btn11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn11ActionPerformed(evt);
+            }
+        });
 
-        btn21.setForeground(new java.awt.Color(255, 255, 255));
+        btn21.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn21.setBorderPainted(false);
         btn21.setFocusable(false);
+        btn21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn21ActionPerformed(evt);
+            }
+        });
 
-        btn20.setForeground(new java.awt.Color(255, 255, 255));
+        btn20.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn20.setBorderPainted(false);
         btn20.setFocusable(false);
+        btn20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn20ActionPerformed(evt);
+            }
+        });
 
-        btn10.setForeground(new java.awt.Color(255, 255, 255));
+        btn10.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn10.setBorderPainted(false);
         btn10.setFocusable(false);
+        btn10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn10ActionPerformed(evt);
+            }
+        });
 
+        btn00.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
         btn00.setBorderPainted(false);
         btn00.setFocusable(false);
+        btn00.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn00ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -208,7 +386,7 @@ public class JogoVelhaForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn00, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn01, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -267,8 +445,9 @@ public class JogoVelhaForm extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblJog1)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
                                         .addComponent(lblDefPartida)
-                                        .addGap(28, 28, 28)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(lblNumPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -300,10 +479,10 @@ public class JogoVelhaForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDefPartida)
-                            .addComponent(lblNumPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblNumPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblJog1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -349,9 +528,163 @@ public class JogoVelhaForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        txtJogador1.setText("");
-        txtJogador2.setText("");
+        jvc.cancelarPartida();
+        finalizarPartida();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btn00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn00ActionPerformed
+        try {
+            realizarJogada(0, 0, 1);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            }   
+            
+        }
+    }//GEN-LAST:event_btn00ActionPerformed
+
+    private void btn01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn01ActionPerformed
+        try {
+            realizarJogada(0, 1, 2);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn01ActionPerformed
+
+    private void btn02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn02ActionPerformed
+        try {
+            realizarJogada(0, 2, 3);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn02ActionPerformed
+
+    private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
+        try {
+            realizarJogada(1, 0, 4);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn10ActionPerformed
+
+    private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
+        try {
+            realizarJogada(1, 1, 5);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn11ActionPerformed
+
+    private void btn12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn12ActionPerformed
+        try {
+            realizarJogada(1, 2, 6);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn12ActionPerformed
+
+    private void btn20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn20ActionPerformed
+        try {
+            realizarJogada(2, 0, 7);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn20ActionPerformed
+
+    private void btn21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21ActionPerformed
+        try {
+            realizarJogada(2, 1, 8);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn21ActionPerformed
+
+    private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22ActionPerformed
+        try {
+            realizarJogada(2, 2, 9);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Alerta",
+                JOptionPane.ERROR_MESSAGE);
+            
+            if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                finalizarPartida();
+            } 
+            
+        }
+    }//GEN-LAST:event_btn22ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,7 +714,7 @@ public class JogoVelhaForm extends javax.swing.JFrame {
         }
         
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

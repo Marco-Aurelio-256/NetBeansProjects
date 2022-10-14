@@ -141,6 +141,9 @@ public class JogoVelhaControle {
             }
             
             if(tabuleiro.cheio()){
+                estadoPartida = PARTIDA_PARADA;
+                resultadosAnteriores[numPartida-1][0] = jogador1.getNome();
+                resultadosAnteriores[numPartida-1][1] = jogador2.getNome();
                 throw new FimPartidaException();
             }
             
