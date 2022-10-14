@@ -537,15 +537,22 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(0, 0, 1);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
             
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
-            }   
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
+            }
             
         }
     }//GEN-LAST:event_btn00ActionPerformed
@@ -554,15 +561,21 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(0, 1, 2);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
-            } 
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
+            }
             
         }
     }//GEN-LAST:event_btn01ActionPerformed
@@ -571,14 +584,20 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(0, 2, 3);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
             } 
             
         }
@@ -588,14 +607,20 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(1, 0, 4);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
             } 
             
         }
@@ -605,14 +630,20 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(1, 1, 5);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
             } 
             
         }
@@ -622,14 +653,20 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(1, 2, 6);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
             } 
             
         }
@@ -639,14 +676,20 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(2, 0, 7);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
             } 
             
         }
@@ -656,14 +699,20 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(2, 1, 8);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
             } 
             
         }
@@ -673,15 +722,21 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         try {
             realizarJogada(2, 2, 9);
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(
-                null, 
-                e.getMessage(),
-                "Alerta",
-                JOptionPane.ERROR_MESSAGE);
-            
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Vitória!",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 finalizarPartida();
-            } 
+            } else {
+                JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro!",
+                    JOptionPane.ERROR_MESSAGE);
+            }
             
         }
     }//GEN-LAST:event_btn22ActionPerformed
