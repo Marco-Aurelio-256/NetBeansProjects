@@ -27,7 +27,6 @@ public class JogoVelhaForm extends javax.swing.JFrame {
     
     public JogoVelhaForm() {
         initComponents();
-        btn00.setBorder(null);
         
     }
 
