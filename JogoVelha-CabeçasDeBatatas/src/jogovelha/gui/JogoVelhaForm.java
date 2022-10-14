@@ -4,6 +4,7 @@
  */
 package jogovelha.gui;
 
+import java.awt.Color;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +17,16 @@ import jogovelha.entidade.Jogador;
  * @author Marco
  */
 public final class JogoVelhaForm extends javax.swing.JFrame {
+    public final int BTN00 = 1;
+    public final int BTN01 = 2;
+    public final int BTN02 = 3;
+    public final int BTN10 = 4;
+    public final int BTN11 = 5;
+    public final int BTN12 = 6;
+    public final int BTN20 = 7;
+    public final int BTN21 = 8;
+    public final int BTN22 = 9;
+    
     JogoVelhaControle jvc = new JogoVelhaControle();
     Jogador j1 = new Jogador();
     Jogador j2 = new Jogador();
@@ -69,28 +80,68 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         String atualJogador;
         String proximoJogador;
         Jogada jgd;
+        Color atualJogadorCor;
         
         if(vezJogador) {
             jgd = new Jogada(l, c, j1);
             atualJogador = "X";
+            atualJogadorCor = new Color(255,102,102);
             proximoJogador = "O";
+  
         } else {
             jgd = new Jogada(l, c, j2);
             atualJogador = "O";
+            atualJogadorCor = new Color(0,153,255);
             proximoJogador = "X";
+            
         }
         
         if(jvc.getTabuleiro().obterJogador(l, c).getId() == 0) {
             switch(btn) {
-                case 1 -> btn00.setText(atualJogador);
-                case 2 -> btn01.setText(atualJogador);
-                case 3 -> btn02.setText(atualJogador);
-                case 4 -> btn10.setText(atualJogador);
-                case 5 -> btn11.setText(atualJogador);
-                case 6 -> btn12.setText(atualJogador);
-                case 7 -> btn20.setText(atualJogador);
-                case 8 -> btn21.setText(atualJogador);
-                case 9 -> btn22.setText(atualJogador);              
+                case 1 -> {
+                    btn00.setText(atualJogador); 
+                    btn00.setForeground(atualJogadorCor);
+                }
+                   
+                case 2 -> {
+                    btn01.setText(atualJogador); 
+                    btn01.setForeground(atualJogadorCor);
+                }
+                
+                case 3 -> {
+                    btn02.setText(atualJogador); 
+                    btn02.setForeground(atualJogadorCor);
+                }
+                
+                case 4 -> {
+                    btn10.setText(atualJogador); 
+                    btn10.setForeground(atualJogadorCor);
+                }
+                    
+                case 5 -> {
+                    btn11.setText(atualJogador); 
+                    btn11.setForeground(atualJogadorCor);
+                }
+                    
+                case 6 -> {
+                    btn12.setText(atualJogador); 
+                    btn12.setForeground(atualJogadorCor);
+                }
+                    
+                case 7 -> {
+                    btn20.setText(atualJogador); 
+                    btn20.setForeground(atualJogadorCor);
+                }
+                    
+                case 8 -> {
+                    btn21.setText(atualJogador); 
+                    btn21.setForeground(atualJogadorCor);
+                }
+                    
+                case 9 -> {
+                    btn22.setText(atualJogador); 
+                    btn22.setForeground(atualJogadorCor);
+                }
 
             }
         }
@@ -371,6 +422,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         });
 
         btn00.setFont(new java.awt.Font("Arial Black", 0, 64)); // NOI18N
+        btn00.setForeground(new java.awt.Color(0, 153, 255));
         btn00.setBorderPainted(false);
         btn00.setFocusable(false);
         btn00.addActionListener(new java.awt.event.ActionListener() {
@@ -390,11 +442,11 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                         .addComponent(btn00, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn01, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(btn02, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(btn11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -535,7 +587,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn00ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn00ActionPerformed
         try {
-            realizarJogada(0, 0, 1);
+            realizarJogada(0, 0, BTN00);
         } catch(Exception e) {
             
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
@@ -559,7 +611,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn01ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn01ActionPerformed
         try {
-            realizarJogada(0, 1, 2);
+            realizarJogada(0, 1, BTN01);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -582,7 +634,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn02ActionPerformed
         try {
-            realizarJogada(0, 2, 3);
+            realizarJogada(0, 2, BTN02);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -605,7 +657,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10ActionPerformed
         try {
-            realizarJogada(1, 0, 4);
+            realizarJogada(1, 0, BTN10);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -628,7 +680,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
         try {
-            realizarJogada(1, 1, 5);
+            realizarJogada(1, 1, BTN11);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -651,7 +703,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn12ActionPerformed
         try {
-            realizarJogada(1, 2, 6);
+            realizarJogada(1, 2, BTN12);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -674,7 +726,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn20ActionPerformed
         try {
-            realizarJogada(2, 0, 7);
+            realizarJogada(2, 0, BTN20);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -697,7 +749,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21ActionPerformed
         try {
-            realizarJogada(2, 1, 8);
+            realizarJogada(2, 1, BTN21);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
@@ -720,7 +772,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
     private void btn22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22ActionPerformed
         try {
-            realizarJogada(2, 2, 9);
+            realizarJogada(2, 2, BTN22);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
                 JOptionPane.showMessageDialog(
