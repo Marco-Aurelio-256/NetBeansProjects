@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/teste/TestaControladora.java</file>
+            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/controle/JogoVelhaControle.java</file>
             <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Tabuleiro.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Jogada.java</file>
             <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/gui/JogoVelhaForm.java</file>
             <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Jogador.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/teste/TestaEntidades.java</file>
         </group>
     </open-files>
 </project-private>
