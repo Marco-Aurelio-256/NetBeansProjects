@@ -39,10 +39,59 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
      */
     Boolean vezJogador;
     
-    /**
-     * Creates new form JogoVelhaForm
-     * @throws java.lang.Exception
-     */
+    public void pintarQuadradosGanhador(int modoGanho){
+        switch(modoGanho) {
+                case 0 -> {
+                    btn00.setBackground(Color.GREEN);
+                    btn01.setBackground(Color.GREEN);
+                    btn02.setBackground(Color.GREEN);
+                }
+                   
+                case 1 -> {
+                    btn10.setBackground(Color.GREEN);
+                    btn11.setBackground(Color.GREEN);
+                    btn12.setBackground(Color.GREEN);
+                }
+                
+                case 2 -> {
+                    btn20.setBackground(Color.GREEN);
+                    btn21.setBackground(Color.GREEN);
+                    btn22.setBackground(Color.GREEN);
+                }
+                
+                case 3 -> {
+                    btn00.setBackground(Color.GREEN);
+                    btn10.setBackground(Color.GREEN);
+                    btn20.setBackground(Color.GREEN);
+                }
+                    
+                case 4 -> {
+                    btn01.setBackground(Color.GREEN);
+                    btn11.setBackground(Color.GREEN);
+                    btn21.setBackground(Color.GREEN);
+                }
+                    
+                case 5 -> {
+                    btn02.setBackground(Color.GREEN);
+                    btn12.setBackground(Color.GREEN);
+                    btn22.setBackground(Color.GREEN);
+                }
+                    
+                case 6 -> {
+                    btn00.setBackground(Color.GREEN);
+                    btn11.setBackground(Color.GREEN);
+                    btn22.setBackground(Color.GREEN);
+                }
+                    
+                case 7 -> {
+                    btn02.setBackground(Color.GREEN);
+                    btn11.setBackground(Color.GREEN);
+                    btn20.setBackground(Color.GREEN);
+                }
+
+            }
+        
+    }
     
     public void iniciarPartida() throws Exception{
         if(!txtJogador1.getText().isEmpty() && !txtJogador2.getText().isEmpty()){
@@ -179,6 +228,15 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             btn20.setText("");
             btn21.setText("");
             btn22.setText("");
+            btn00.setBackground(new Color(255, 255, 255));
+            btn01.setBackground(new Color(255, 255, 255));
+            btn02.setBackground(new Color(255, 255, 255));
+            btn10.setBackground(new Color(255, 255, 255));
+            btn11.setBackground(new Color(255, 255, 255));
+            btn12.setBackground(new Color(255, 255, 255));
+            btn20.setBackground(new Color(255, 255, 255));
+            btn21.setBackground(new Color(255, 255, 255));
+            btn22.setBackground(new Color(255, 255, 255));
         }
         
     }
@@ -462,15 +520,16 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn02, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn00, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn01, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn01, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn00, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn12, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn22, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -592,6 +651,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         } catch(Exception e) {
             
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -615,6 +676,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(0, 1, BTN01);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -638,6 +701,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(0, 2, BTN02);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -661,6 +726,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(1, 0, BTN10);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -684,6 +751,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(1, 1, BTN11);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -707,14 +776,17 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(1, 2, BTN12);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
                     "Vitória!",
                     JOptionPane.INFORMATION_MESSAGE);
-                
+
                 finalizarPartida();
             } else {
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -730,6 +802,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(2, 0, BTN20);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -753,6 +827,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(2, 1, BTN21);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),
@@ -776,6 +852,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             realizarJogada(2, 2, BTN22);
         } catch(Exception e) {
             if(e.getClass().getName().equals("jogovelha.controle.FimPartidaException")){
+                pintarQuadradosGanhador(jvc.getModoDoGanho());
+                
                 JOptionPane.showMessageDialog(
                     null, 
                     e.getMessage(),

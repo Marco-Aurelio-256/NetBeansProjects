@@ -365,16 +365,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btn02" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="btn00" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
                       <Component id="btn01" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                      <Component id="btn00" min="-2" pref="120" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btn12" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btn10" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="btn11" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btn12" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+                          <Component id="btn11" alignment="3" min="-2" pref="120" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">

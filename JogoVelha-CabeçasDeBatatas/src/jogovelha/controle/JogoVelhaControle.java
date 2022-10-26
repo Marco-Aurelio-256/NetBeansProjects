@@ -23,10 +23,20 @@ public class JogoVelhaControle {
     private Jogador jogador2;
     private Jogador ganhador;
     private int estadoPartida;
+    private int modoGanho;
+
+    public int getModoDoGanho() {
+        return modoGanho;
+    }
+
+    public void setModoDoGanho(int modoDoGanho) {
+        this.modoGanho = modoDoGanho;
+    }
     private String[][] resultadosAnteriores;
 
     public JogoVelhaControle() {
         this.numPartida = 0;
+        modoGanho = 8;
         this.tabuleiro = new Tabuleiro();
         this.jogador1 = new Jogador();
         this.jogador2 = new Jogador();
@@ -72,12 +82,14 @@ public class JogoVelhaControle {
                         && tabuleiro.obterJogador(linha, 1).equals(jogador1)
                         && tabuleiro.obterJogador(linha, 2).equals(jogador1)) {
                     temGanhador = true;
+                    modoGanho = linha;
                 }
 
                 if (tabuleiro.obterJogador(linha, 0).equals(jogador2)
                         && tabuleiro.obterJogador(linha, 1).equals(jogador2)
                         && tabuleiro.obterJogador(linha, 2).equals(jogador2)) {
                     temGanhador = true;
+                    modoGanho = linha;
                 }
 
             }
@@ -88,12 +100,14 @@ public class JogoVelhaControle {
                         && tabuleiro.obterJogador(1, coluna).equals(jogador1)
                         && tabuleiro.obterJogador(2, coluna).equals(jogador1)) {
                     temGanhador = true;
+                    modoGanho = coluna+3;
                 }
 
                 if (tabuleiro.obterJogador(0, coluna).equals(jogador2)
                         && tabuleiro.obterJogador(1, coluna).equals(jogador2)
                         && tabuleiro.obterJogador(2, coluna).equals(jogador2)) {
                     temGanhador = true;
+                    modoGanho = coluna+3;
                 }
 
             }
@@ -103,24 +117,28 @@ public class JogoVelhaControle {
                     && tabuleiro.obterJogador(1, 1).equals(jogador1)
                     && tabuleiro.obterJogador(2, 2).equals(jogador1)) {
                 temGanhador = true;
+                modoGanho = 6;
             }
 
             if (tabuleiro.obterJogador(0, 0).equals(jogador2)
                     && tabuleiro.obterJogador(1, 1).equals(jogador2)
                     && tabuleiro.obterJogador(2, 2).equals(jogador2)) {
                 temGanhador = true;
+                modoGanho = 6;
             }
             
             if (tabuleiro.obterJogador(2, 0).equals(jogador1)
                     && tabuleiro.obterJogador(1, 1).equals(jogador1)
                     && tabuleiro.obterJogador(0, 2).equals(jogador1)) {
                 temGanhador = true;
+                modoGanho = 7;
             }
 
             if (tabuleiro.obterJogador(2, 0).equals(jogador2)
                     && tabuleiro.obterJogador(1, 1).equals(jogador2)
                     && tabuleiro.obterJogador(0, 2).equals(jogador2)) {
                 temGanhador = true;
+                modoGanho = 7;
             }
             
             if(temGanhador){
