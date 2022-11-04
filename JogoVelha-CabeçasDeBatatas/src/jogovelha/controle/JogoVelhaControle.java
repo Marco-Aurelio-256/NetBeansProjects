@@ -42,7 +42,7 @@ public class JogoVelhaControle {
         this.jogador2 = new Jogador();
         this.ganhador = new Jogador();
         this.estadoPartida = PARTIDA_PARADA;
-        this.resultadosAnteriores = new String[1000][2];
+        this.resultadosAnteriores = new String[1000][3];
 
     }
 
@@ -159,6 +159,7 @@ public class JogoVelhaControle {
             }
             
             if(tabuleiro.cheio()){
+                modoGanho = 8;
                 estadoPartida = PARTIDA_PARADA;
                 resultadosAnteriores[numPartida-1][0] = "*"+jogador1.getNome();
                 resultadosAnteriores[numPartida-1][1] = "*"+jogador2.getNome();
@@ -175,8 +176,6 @@ public class JogoVelhaControle {
     public void cancelarPartida(){
         if(estadoPartida == PARTIDA_INICIADA){
             estadoPartida = PARTIDA_PARADA;
-            resultadosAnteriores[numPartida-1][0] = "*"+jogador1.getNome();
-            resultadosAnteriores[numPartida-1][1] = "*"+jogador2.getNome();
             
             
         }

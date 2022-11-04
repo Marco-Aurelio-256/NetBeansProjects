@@ -42,51 +42,64 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     public void pintarQuadradosGanhador(int modoGanho){
         switch(modoGanho) {
                 case 0 -> {
-                    btn00.setBackground(Color.GREEN);
-                    btn01.setBackground(Color.GREEN);
-                    btn02.setBackground(Color.GREEN);
+                    btn00.setBackground(new Color(0, 190, 0));
+                    btn01.setBackground(new Color(0, 190, 0));
+                    btn02.setBackground(new Color(0, 190, 0));
                 }
                    
                 case 1 -> {
-                    btn10.setBackground(Color.GREEN);
-                    btn11.setBackground(Color.GREEN);
-                    btn12.setBackground(Color.GREEN);
+                    btn10.setBackground(new Color(0, 190, 0));
+                    btn11.setBackground(new Color(0, 190, 0));
+                    btn12.setBackground(new Color(0, 190, 0));
                 }
                 
                 case 2 -> {
-                    btn20.setBackground(Color.GREEN);
-                    btn21.setBackground(Color.GREEN);
-                    btn22.setBackground(Color.GREEN);
+                    btn20.setBackground(new Color(0, 190, 0));
+                    btn21.setBackground(new Color(0, 190, 0));
+                    btn22.setBackground(new Color(0, 190, 0));
                 }
                 
                 case 3 -> {
-                    btn00.setBackground(Color.GREEN);
-                    btn10.setBackground(Color.GREEN);
-                    btn20.setBackground(Color.GREEN);
+                    btn00.setBackground(new Color(0, 190, 0));
+                    btn10.setBackground(new Color(0, 190, 0));
+                    btn20.setBackground(new Color(0, 190, 0));
                 }
                     
                 case 4 -> {
-                    btn01.setBackground(Color.GREEN);
-                    btn11.setBackground(Color.GREEN);
-                    btn21.setBackground(Color.GREEN);
+                    btn01.setBackground(new Color(0, 190, 0));
+                    btn11.setBackground(new Color(0, 190, 0));
+                    btn21.setBackground(new Color(0, 190, 0));
                 }
                     
                 case 5 -> {
-                    btn02.setBackground(Color.GREEN);
-                    btn12.setBackground(Color.GREEN);
-                    btn22.setBackground(Color.GREEN);
+                    btn02.setBackground(new Color(0, 190, 0));
+                    btn12.setBackground(new Color(0, 190, 0));
+                    btn22.setBackground(new Color(0, 190, 0));
                 }
                     
                 case 6 -> {
-                    btn00.setBackground(Color.GREEN);
-                    btn11.setBackground(Color.GREEN);
-                    btn22.setBackground(Color.GREEN);
+                    btn00.setBackground(new Color(0, 190, 0));
+                    btn11.setBackground(new Color(0, 190, 0));
+                    btn22.setBackground(new Color(0, 190, 0));
                 }
                     
                 case 7 -> {
-                    btn02.setBackground(Color.GREEN);
-                    btn11.setBackground(Color.GREEN);
-                    btn20.setBackground(Color.GREEN);
+                    btn02.setBackground(new Color(0, 190, 0));
+                    btn11.setBackground(new Color(0, 190, 0));
+                    btn20.setBackground(new Color(0, 190, 0));
+                }
+                
+                case 8 ->{
+                    btn00.setBackground(new Color(180, 180, 0));
+                    btn01.setBackground(new Color(180, 180, 0));
+                    btn02.setBackground(new Color(180, 180, 0));
+                    btn10.setBackground(new Color(180, 180, 0));
+                    btn11.setBackground(new Color(180, 180, 0));
+                    btn12.setBackground(new Color(180, 180, 0));
+                    btn20.setBackground(new Color(180, 180, 0));
+                    btn21.setBackground(new Color(180, 180, 0));
+                    btn22.setBackground(new Color(180, 180, 0));
+                    
                 }
 
             }
@@ -218,7 +231,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         btn21.setEnabled(estado);
         btn22.setEnabled(estado);
         
-        if(!estado == false) {
+        if(estado) {
             btn00.setText("");
             btn01.setText("");
             btn02.setText("");
