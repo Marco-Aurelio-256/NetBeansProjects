@@ -5,12 +5,18 @@
 package jogovelha.gui;
 
 import java.awt.Color;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jogovelha.controle.JogoVelhaControle;
 import jogovelha.entidade.Jogada;
 import jogovelha.entidade.Jogador;
+import jogovelha.entidade.Resultados;
 
 /**
  *
@@ -26,6 +32,9 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     public final int BTN20 = 7;
     public final int BTN21 = 8;
     public final int BTN22 = 9;
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
+    EntityManager em = emf.createEntityManager();
     
     JogoVelhaControle jvc = new JogoVelhaControle();
     Jogador j1 = new Jogador();
@@ -216,6 +225,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     
     public JogoVelhaForm() {
         initComponents();
+        
         definirTabela(false);
         
     }
@@ -256,8 +266,12 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     
     public void finalizarPartida() {
         DefaultTableModel model = (DefaultTableModel) tblResultados.getModel();
-        String[][] resultadosAnteriores = jvc.getResultadosAnteriores();
         model.setRowCount(0);
+        
+        List<Resultados> l = jvc.getResultados().findAll();
+        for(Iterator<Resultados> it = l.iterator(); it.hasNext();){
+            
+        }
         
         int i = 0;
         Boolean continuarResultados = true;

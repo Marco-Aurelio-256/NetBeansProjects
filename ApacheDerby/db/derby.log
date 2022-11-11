@@ -1,7 +1,7 @@
-Fri Nov 04 11:52:04 BRT 2022 : Apache Derby Servidor de Rede - 10.14.2.0 - (1828579) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+Fri Nov 11 12:11:45 BRT 2022 : Apache Derby Servidor de Rede - 10.14.2.0 - (1828579) iniciado e pronto para aceitar conexões na porta 1527 em {3}
 ----------------------------------------------------------------
-Fri Nov 04 11:52:04 BRT 2022:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instância a816c00e-0184-4320-a6be-0000358a2c51
+Fri Nov 11 12:11:46 BRT 2022:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instância a816c00e-0184-673f-329b-0000358a2c51
 no diretório de banco de dados C:\Users\Aluno\Documents\GitHub\NetBeansProjects\ApacheDerby\db\JogoVelhaDB 
 
 java.vendor=Oracle Corporation
@@ -13,8 +13,8 @@ os.version=10.0
 derby.system.home=C:\Users\Aluno\Documents\GitHub\NetBeansProjects\ApacheDerby\db
 Carregador de classe do banco de dados iniciado - derby.database.classpath=''
 ----------------------------------------------------------------
-Fri Nov 04 13:46:45 BRT 2022: Shutting down Derby engine
+Fri Nov 11 15:30:58 BRT 2022: Shutting down Derby engine
 ----------------------------------------------------------------
-Fri Nov 04 13:46:45 BRT 2022:
-Encerrando a instância a816c00e-0184-4320-a6be-0000358a2c51
+Fri Nov 11 15:30:58 BRT 2022:
+Encerrando a instância a816c00e-0184-673f-329b-0000358a2c51
 ----------------------------------------------------------------

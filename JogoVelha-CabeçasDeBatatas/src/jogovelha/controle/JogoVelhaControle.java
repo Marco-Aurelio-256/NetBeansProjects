@@ -4,9 +4,14 @@
  */
 package jogovelha.controle;
 
+import java.util.HashSet;
 import jogovelha.entidade.Jogador;
 import jogovelha.entidade.Tabuleiro;
 import jogovelha.entidade.Jogada;
+import jogovelha.entidade.Resultados;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -16,7 +21,10 @@ public class JogoVelhaControle {
 
     public static final int PARTIDA_INICIADA = 0;
     public static final int PARTIDA_PARADA = 1;
-
+    
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
+    EntityManager em = emf.createEntityManager();
+    
     private int numPartida;
     private Tabuleiro tabuleiro;
     private Jogador jogador1;
@@ -24,26 +32,26 @@ public class JogoVelhaControle {
     private Jogador ganhador;
     private int estadoPartida;
     private int modoGanho;
-
-    public int getModoDoGanho() {
-        return modoGanho;
-    }
-
-    public void setModoDoGanho(int modoDoGanho) {
-        this.modoGanho = modoDoGanho;
-    }
-    private String[][] resultadosAnteriores;
+    Resultados resultados;
 
     public JogoVelhaControle() {
         this.numPartida = 0;
-        modoGanho = 8;
+        modoGanho = 9;
         this.tabuleiro = new Tabuleiro();
         this.jogador1 = new Jogador();
         this.jogador2 = new Jogador();
         this.ganhador = new Jogador();
+        resultados = new Resultados();
         this.estadoPartida = PARTIDA_PARADA;
-        this.resultadosAnteriores = new String[1000][3];
 
+    }
+
+    public Resultados getResultados() {
+        return resultados;
+    }
+
+    public void setResultados(Resultados resultados) {
+        this.resultados = resultados;
     }
 
     public void iniciarPartida(Jogador j1, Jogador j2) throws Exception {
@@ -144,15 +152,29 @@ public class JogoVelhaControle {
             if(temGanhador){
                 ganhador = jgd.getJogador();
                 estadoPartida = PARTIDA_PARADA;
+                String statsJ1;
+                String statsJ2;
                 
                 if(ganhador.equals(jogador1)){
-                    resultadosAnteriores[numPartida-1][0] = "*"+jogador1.getNome();
-                    resultadosAnteriores[numPartida-1][1] = jogador2.getNome();
-                            
+                    statsJ1 = "*";
+                    statsJ2 = "";
                 } else {
-                    resultadosAnteriores[numPartida-1][0] = jogador1.getNome();
-                    resultadosAnteriores[numPartida-1][1] = "*"+jogador2.getNome();
+                    statsJ1 = "";
+                    statsJ2 = "*";
+                }
+                
+                try{
+                    em.getTransaction().begin();
+                        
+                    resultados.setNpartida(numPartida);
+                    resultados.setJogador1(statsJ1+jogador1.getNome());
+                    resultados.setJogador2(statsJ2+jogador2.getNome());
+                        
+                    em.persist(resultados);
+                    em.getTransaction().commit();
                     
+                } catch(Exception e){
+                    System.err.print(e.getMessage());
                 }
                 
                 throw new FimPartidaException(ganhador);
@@ -161,8 +183,20 @@ public class JogoVelhaControle {
             if(tabuleiro.cheio()){
                 modoGanho = 8;
                 estadoPartida = PARTIDA_PARADA;
-                resultadosAnteriores[numPartida-1][0] = "*"+jogador1.getNome();
-                resultadosAnteriores[numPartida-1][1] = "*"+jogador2.getNome();
+                
+                try{
+                    em.getTransaction().begin();
+                        
+                    resultados.setNpartida(numPartida);
+                    resultados.setJogador1("*"+jogador1.getNome());
+                    resultados.setJogador2("*"+jogador2.getNome());
+                        
+                    em.persist(resultados);
+                    em.getTransaction().commit();
+                    
+                } catch(Exception e){
+                    System.err.print(e.getMessage());
+                }
                 throw new FimPartidaException();
             }
             
@@ -242,6 +276,14 @@ public class JogoVelhaControle {
         System.out.print(informacao + tabela);
     }
     
+    public int getModoDoGanho() {
+        return modoGanho;
+    }
+
+    public void setModoDoGanho(int modoDoGanho) {
+        this.modoGanho = modoDoGanho;
+    }
+    
     public int getNumPartida() {
         return numPartida;
     }
@@ -288,14 +330,6 @@ public class JogoVelhaControle {
 
     public void setEstadoPartida(int estadoPartida) {
         this.estadoPartida = estadoPartida;
-    }
-
-    public String[][] getResultadosAnteriores() {
-        return resultadosAnteriores;
-    }
-
-    public void setResultadosAnteriores(String[][] resultadosAnteriores) {
-        this.resultadosAnteriores = resultadosAnteriores;
     }
 
 }
