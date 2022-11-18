@@ -9,9 +9,6 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -38,9 +35,6 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     public final int BTN20 = 7;
     public final int BTN21 = 8;
     public final int BTN22 = 9;
-    
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
-    EntityManager em = emf.createEntityManager();
     
     JogoVelhaControle jvc = new JogoVelhaControle();
     Jogador j1 = new Jogador();
@@ -151,6 +145,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             
             btnIniciar.setEnabled(false);
             btnCancelar.setEnabled(true);
+            btnLimpaResultados.setEnabled(false);
             txtJogador1.setEnabled(false);
             txtJogador2.setEnabled(false);
             
@@ -232,7 +227,10 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
 
             }
         }
-    
+        if(!mute){
+            playSound("src/jogovelha/sons/MarkingSound.wav");
+        }
+        
         jvc.realizarJogada(jgd);
         vezJogador = !vezJogador;
         lblMensagem.setText("É a vez do Jogador " + proximoJogador);
@@ -289,7 +287,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         Resultados resultados = new Resultados();
         
         try{
-            List<Resultados> list = resultados.retrieveAll();
+            List<Resultados> list = resultados.retornarTodos();
             
             for(Iterator<Resultados> iterator = list.iterator(); iterator.hasNext();){
                 Resultados result = iterator.next();
@@ -325,6 +323,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         txtJogador2.setEnabled(true);
         btnIniciar.setEnabled(true);
         btnCancelar.setEnabled(false);
+        btnLimpaResultados.setEnabled(true);
         
     }
     
@@ -388,6 +387,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         btn00 = new javax.swing.JButton();
         lblLegenda1 = new javax.swing.JLabel();
         btnMute = new javax.swing.JButton();
+        btnLimpaResultados = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -622,6 +622,14 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             }
         });
 
+        btnLimpaResultados.setForeground(new java.awt.Color(255, 0, 0));
+        btnLimpaResultados.setText("Limpar todos os resultados!!!");
+        btnLimpaResultados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpaResultadosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -671,8 +679,13 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblLegenda1)
-                .addGap(40, 40, 40))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblLegenda1)
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnLimpaResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -710,7 +723,9 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLegenda1)
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLimpaResultados)
+                .addContainerGap())
         );
 
         pack();
@@ -967,6 +982,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     private void btnMuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuteActionPerformed
         mute = !mute;
         Icon icon;
+        
         if(mute){
             icon = new ImageIcon("src/jogovelha/imagem/Muted.png");
         } else {
@@ -975,6 +991,40 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         
         btnMute.setIcon(icon);
     }//GEN-LAST:event_btnMuteActionPerformed
+
+    private void btnLimpaResultadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaResultadosActionPerformed
+        String senha = JOptionPane.showInputDialog(
+                null,
+                "Digite a senha para limpar a tabela:",
+                "Verificação",
+                JOptionPane.INFORMATION_MESSAGE);
+        
+        if(senha.equals("123456")){
+            String[] opcoes = {"Sim", "Não"};
+            
+            int escolha = JOptionPane.showOptionDialog(
+                    null,
+                    "Você realmente deseja limpar todos os resultados?",
+                    "Confirmação",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opcoes,
+                    opcoes[1]);
+            
+            if(escolha == JOptionPane.YES_OPTION){
+                jvc.limparTabela();
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Senha Incorreta!",
+                "Erro!",
+                JOptionPane.ERROR_MESSAGE);
+            
+        }
+    }//GEN-LAST:event_btnLimpaResultadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1025,6 +1075,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     private javax.swing.JButton btn22;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIniciar;
+    private javax.swing.JButton btnLimpaResultados;
     private javax.swing.JButton btnMute;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

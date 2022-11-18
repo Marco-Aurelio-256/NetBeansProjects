@@ -152,16 +152,7 @@ public class JogoVelhaControle {
                 }
                 
                 try{
-                    em.getTransaction().begin();
-                    
-                    Resultados resultados = new Resultados();
-                    
-                    resultados.setNpartida(numPartida);
-                    resultados.setJogador1(statsJ1+jogador1.getNome());
-                    resultados.setJogador2(statsJ2+jogador2.getNome());
-                        
-                    em.persist(resultados);
-                    em.getTransaction().commit();
+                    inserirResultado(numPartida,statsJ1+jogador1.getNome(),statsJ2+jogador2.getNome());
                     
                 } catch(Exception e){
                     System.err.print(e.getMessage());
@@ -175,16 +166,7 @@ public class JogoVelhaControle {
                 estadoPartida = PARTIDA_PARADA;
                 
                 try{
-                    em.getTransaction().begin();
-                    
-                    Resultados resultados = new Resultados();
-                    
-                    resultados.setNpartida(numPartida);
-                    resultados.setJogador1("*"+jogador1.getNome());
-                    resultados.setJogador2("*"+jogador2.getNome());
-                        
-                    em.persist(resultados);
-                    em.getTransaction().commit();
+                    inserirResultado(numPartida,"*"+jogador1.getNome(),"*"+jogador2.getNome());
                     
                 } catch(Exception e){
                     System.err.print(e.getMessage());
@@ -204,6 +186,20 @@ public class JogoVelhaControle {
             estadoPartida = PARTIDA_PARADA;
             
         }
+    }
+    
+    public void inserirResultado(Integer numPartida, String j1, String j2) throws Exception{
+        Resultados resultados = new Resultados();
+                    
+        resultados.setNpartida(numPartida);
+        resultados.setJogador1(j1);
+        resultados.setJogador2(j2);
+        
+        resultados.criaResultado(resultados);
+    }
+    
+    public void limparTabela(){
+        
     }
     
     public void mostrarNaConsole(){

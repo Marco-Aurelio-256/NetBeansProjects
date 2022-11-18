@@ -17,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -28,7 +29,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Resultados.findAll", query = "SELECT r FROM Resultados r"),
     @NamedQuery(name = "Resultados.findByNpartida", query = "SELECT r FROM Resultados r WHERE r.npartida = :npartida"),
     @NamedQuery(name = "Resultados.findByJogador1", query = "SELECT r FROM Resultados r WHERE r.jogador1 = :jogador1"),
-    @NamedQuery(name = "Resultados.findByJogador2", query = "SELECT r FROM Resultados r WHERE r.jogador2 = :jogador2")})
+    @NamedQuery(name = "Resultados.findByJogador2", query = "SELECT r FROM Resultados r WHERE r.jogador2 = :jogador2"),
+    @NamedQuery(name = "Resultados.DeleteAll", query = "DELETE FROM Resultados")})
 public class Resultados implements Serializable {
   
     private static final long serialVersionUID = 1L;
@@ -42,6 +44,10 @@ public class Resultados implements Serializable {
     @Basic(optional = false)
     @Column(name = "JOGADOR2")
     private String jogador2;
+    @Transient
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
+    @Transient
+    EntityManager em = emf.createEntityManager();
 
     public Resultados() {
     }
@@ -56,16 +62,58 @@ public class Resultados implements Serializable {
         this.jogador2 = jogador2;
     }
     
-    public List<Resultados> retrieveAll() throws Exception{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
-        EntityManager em = emf.createEntityManager();
+    public void encerrarConexaoDB(EntityManagerFactory emf, EntityManager em) {
+        em.close();
+        emf.close();
+    }
+    
+    public List<Resultados> retornarTodos() throws Exception {
         List<Resultados> list = null;
         
         Query q = em.createNamedQuery("Resultados.findAll");
         list = (List<Resultados>) q.getResultList();
         
         return list;
+         
+    }
+    
+    public void criaResultado(Resultados resultados) throws Exception{
+        boolean transacaoOK = false;
         
+        try {
+            em.getTransaction().begin();               
+            em.persist(resultados);
+            transacaoOK = true;
+            
+        } catch(javax.persistence.PersistenceException pe) {
+            throw new Exception("Registro já existente! Falha ao gravar no banco!");
+        } finally {
+            if(transacaoOK){
+              em.getTransaction().commit();  
+            } else {
+                em.getTransaction().rollback();
+            }
+        }
+    }
+    
+    public void deletaResultado(Resultados resultados) throws Exception{
+        boolean transacaoOK = false;
+        
+        try {
+            em.getTransaction().begin();
+            em.remove(resultados);
+            transacaoOK = true;
+            
+        } catch(javax.persistence.PersistenceException ep) {
+            throw new Exception("Erro ao deletar dados da tabela Resultados!");
+            
+        } finally {
+            if(transacaoOK){
+              em.getTransaction().commit();  
+            } else {
+                em.getTransaction().rollback();               
+            }
+        }  
     }
     
     public Integer getNpartida() {

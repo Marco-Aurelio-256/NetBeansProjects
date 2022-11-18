@@ -1,7 +1,7 @@
-Fri Nov 18 13:00:06 BRT 2022 : Apache Derby Servidor de Rede - 10.14.2.0 - (1828579) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+Fri Nov 18 16:37:36 BRT 2022 : Apache Derby Servidor de Rede - 10.14.2.0 - (1828579) iniciado e pronto para aceitar conexões na porta 1527 em {3}
 ----------------------------------------------------------------
-Fri Nov 18 13:00:06 BRT 2022:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instância a816c00e-0184-8b77-f73e-0000619b8f66
+Fri Nov 18 16:37:37 BRT 2022:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instância a816c00e-0184-8c3f-1b03-0000619b8f66
 no diretório de banco de dados C:\Users\Aluno\Documents\GitHub\NetBeansProjects\JogoVelha-CabeçasDeBatatas\ApacheDerby\db\JogoVelhaDB 
 
 java.vendor=Oracle Corporation
