@@ -4,7 +4,6 @@
  */
 package jogovelha.controle;
 
-import java.util.HashSet;
 import jogovelha.entidade.Jogador;
 import jogovelha.entidade.Tabuleiro;
 import jogovelha.entidade.Jogada;

@@ -264,33 +264,42 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         
     }
     
-    public void finalizarPartida() {
+    public void atualizarTabela(){
         DefaultTableModel model = (DefaultTableModel) tblResultados.getModel();
         model.setRowCount(0);
+        int atualPartida = 1;
         
-        List<Resultados> l = jvc.getResultados().findAll();
-        for(Iterator<Resultados> it = l.iterator(); it.hasNext();){
+        try{
+            List<Resultados> list = jvc.getResultados().retrieveAll();
             
-        }
-        
-        int i = 0;
-        Boolean continuarResultados = true;
-        
-        while(continuarResultados){
-            if(resultadosAnteriores[i][1] != null){
+            for(Iterator<Resultados> iterator = list.iterator(); iterator.hasNext();){
+                Resultados result = iterator.next();
+                
+                
                 model.addRow(new Object[]{
-                    i+1,
-                    resultadosAnteriores[i][0],
-                    resultadosAnteriores[i][1]
-                    });
+                    result,
+                    result,
+                    result
+                });
                 
-                i++;
-            } else {
-                continuarResultados = false;
+                atualPartida++;
+                
             }
-                
-        }
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Erro!",
+                JOptionPane.INFORMATION_MESSAGE);
+        }            
         
+        jvc.setNumPartida(atualPartida);
+        lblNumPartida.setText(atualPartida+"°");
+    }
+    
+    public void finalizarPartida() {
+        atualizarTabela();
         lblMensagem.setText("Fim da partida!");
         
         definirTabela(false);

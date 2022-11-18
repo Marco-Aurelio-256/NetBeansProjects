@@ -5,12 +5,17 @@
 package jogovelha.entidade;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +30,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "Resultados.findByJogador1", query = "SELECT r FROM Resultados r WHERE r.jogador1 = :jogador1"),
     @NamedQuery(name = "Resultados.findByJogador2", query = "SELECT r FROM Resultados r WHERE r.jogador2 = :jogador2")})
 public class Resultados implements Serializable {
-
+    
+    private EntityManagerFactory emf = null;
+    private EntityManager em = null;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -39,18 +47,34 @@ public class Resultados implements Serializable {
     private String jogador2;
 
     public Resultados() {
+        emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
+        em = emf.createEntityManager();
     }
 
     public Resultados(Integer npartida) {
+        emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
+        em = emf.createEntityManager();
         this.npartida = npartida;
     }
 
     public Resultados(Integer npartida, String jogador1, String jogador2) {
+        emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
+        em = emf.createEntityManager();
         this.npartida = npartida;
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
     }
-
+    
+    public List<Resultados> retrieveAll() throws Exception{
+        List<Resultados> list = null;
+        
+        Query q = em.createNamedQuery("Resultados.findAll");
+        list = (List<Resultados>) q.getResultList();
+        
+        return list;
+        
+    }
+    
     public Integer getNpartida() {
         return npartida;
     }
