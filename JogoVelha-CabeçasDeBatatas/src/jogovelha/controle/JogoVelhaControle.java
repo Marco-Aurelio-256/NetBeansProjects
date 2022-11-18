@@ -24,33 +24,23 @@ public class JogoVelhaControle {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("JogoVelha-Cabe_asDeBatatasPU");
     EntityManager em = emf.createEntityManager();
     
-    private int numPartida;
+    private Integer numPartida;
     private Tabuleiro tabuleiro;
     private Jogador jogador1;
     private Jogador jogador2;
     private Jogador ganhador;
     private int estadoPartida;
     private int modoGanho;
-    Resultados resultados;
-
+    
     public JogoVelhaControle() {
-        this.numPartida = 0;
+        this.numPartida = 1;
         modoGanho = 9;
         this.tabuleiro = new Tabuleiro();
         this.jogador1 = new Jogador();
         this.jogador2 = new Jogador();
         this.ganhador = new Jogador();
-        resultados = new Resultados();
         this.estadoPartida = PARTIDA_PARADA;
 
-    }
-
-    public Resultados getResultados() {
-        return resultados;
-    }
-
-    public void setResultados(Resultados resultados) {
-        this.resultados = resultados;
     }
 
     public void iniciarPartida(Jogador j1, Jogador j2) throws Exception {
@@ -60,7 +50,6 @@ public class JogoVelhaControle {
                 jogador1 = j1;
                 jogador2 = j2;
                 estadoPartida = PARTIDA_INICIADA;
-                numPartida++;
                 tabuleiro.limpar();
 
             } else {
@@ -164,7 +153,9 @@ public class JogoVelhaControle {
                 
                 try{
                     em.getTransaction().begin();
-                        
+                    
+                    Resultados resultados = new Resultados();
+                    
                     resultados.setNpartida(numPartida);
                     resultados.setJogador1(statsJ1+jogador1.getNome());
                     resultados.setJogador2(statsJ2+jogador2.getNome());
@@ -185,7 +176,9 @@ public class JogoVelhaControle {
                 
                 try{
                     em.getTransaction().begin();
-                        
+                    
+                    Resultados resultados = new Resultados();
+                    
                     resultados.setNpartida(numPartida);
                     resultados.setJogador1("*"+jogador1.getNome());
                     resultados.setJogador2("*"+jogador2.getNome());
@@ -209,7 +202,6 @@ public class JogoVelhaControle {
     public void cancelarPartida(){
         if(estadoPartida == PARTIDA_INICIADA){
             estadoPartida = PARTIDA_PARADA;
-            
             
         }
     }
@@ -283,11 +275,11 @@ public class JogoVelhaControle {
         this.modoGanho = modoDoGanho;
     }
     
-    public int getNumPartida() {
+    public Integer getNumPartida() {
         return numPartida;
     }
 
-    public void setNumPartida(int numPartida) {
+    public void setNumPartida(Integer numPartida) {
         this.numPartida = numPartida;
     }
 

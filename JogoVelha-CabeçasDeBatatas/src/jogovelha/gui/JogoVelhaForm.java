@@ -5,12 +5,18 @@
 package jogovelha.gui;
 
 import java.awt.Color;
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jogovelha.controle.JogoVelhaControle;
@@ -41,6 +47,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     Jogador j2 = new Jogador();
     
     Random rd = new Random();
+    boolean mute = false;
     /**
      * @param vezJogador
      * true = Jogador X
@@ -49,6 +56,15 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     Boolean vezJogador;
     
     public void pintarQuadradosGanhador(int modoGanho){
+        if(!mute){
+            if(modoGanho == 8){
+                playSound("src/jogovelha/sons/DrawSound.wav");
+
+            } else {
+                playSound("src/jogovelha/sons/WinSound.wav");
+            }
+        }
+        
         switch(modoGanho) {
                 case 0 -> {
                     btn00.setBackground(new Color(0, 190, 0));
@@ -131,7 +147,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                 lblMensagem.setText("É a vez do Jogador O");
             }
             
-            lblNumPartida.setText(jvc.getNumPartida()+"° partida");
+            lblNumPartida.setText(jvc.getNumPartida()+"° Partida");
             
             btnIniciar.setEnabled(false);
             btnCancelar.setEnabled(true);
@@ -227,6 +243,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         initComponents();
         
         definirTabela(false);
+        atualizarTabela();
         
     }
     
@@ -262,24 +279,25 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
             btn22.setBackground(new Color(255, 255, 255));
         }
         
+        
     }
     
     public void atualizarTabela(){
         DefaultTableModel model = (DefaultTableModel) tblResultados.getModel();
         model.setRowCount(0);
-        int atualPartida = 1;
+        Integer atualPartida = 1;
+        Resultados resultados = new Resultados();
         
         try{
-            List<Resultados> list = jvc.getResultados().retrieveAll();
+            List<Resultados> list = resultados.retrieveAll();
             
             for(Iterator<Resultados> iterator = list.iterator(); iterator.hasNext();){
                 Resultados result = iterator.next();
-                
-                
+               
                 model.addRow(new Object[]{
-                    result,
-                    result,
-                    result
+                    result.getNpartida(),
+                    result.getJogador1(),
+                    result.getJogador2()
                 });
                 
                 atualPartida++;
@@ -295,7 +313,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         }            
         
         jvc.setNumPartida(atualPartida);
-        lblNumPartida.setText(atualPartida+"°");
+        lblNumPartida.setText(atualPartida+"° Partida");
     }
     
     public void finalizarPartida() {
@@ -308,6 +326,24 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         btnIniciar.setEnabled(true);
         btnCancelar.setEnabled(false);
         
+    }
+    
+    void playSound(String soundFile) {
+        try{
+            File f = new File(soundFile);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());  
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                    null, 
+                    e.getMessage(),
+                    "Erro de Som",
+                    JOptionPane.ERROR_MESSAGE); 
+            
+        }
     }
 
     /**
@@ -350,6 +386,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         btn20 = new javax.swing.JButton();
         btn10 = new javax.swing.JButton();
         btn00 = new javax.swing.JButton();
+        lblLegenda1 = new javax.swing.JLabel();
+        btnMute = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -574,6 +612,16 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        lblLegenda1.setText("Feito por Micheli Magalhães e Marco Aurélio");
+
+        btnMute.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jogovelha/imagem/Unmuted.png"))); // NOI18N
+        btnMute.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnMute.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMuteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -585,18 +633,18 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                     .addComponent(lblMensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblJog1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblJog1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(16, 16, 16)
-                                        .addComponent(lblDefPartida)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblNumPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(lblDefPartida)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblNumPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 32, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
@@ -614,19 +662,25 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                                     .addComponent(btnCancelar))
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addContainerGap(17, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblLegenda)
-                        .addGap(94, 94, 94))))
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblLegenda)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnMute, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)))))
+                .addContainerGap(19, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblLegenda1)
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDefPartida)
                             .addComponent(lblNumPartida, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -647,14 +701,16 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblLegenda)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLegenda)
+                            .addComponent(btnMute, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLegenda1)
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -908,6 +964,18 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn22ActionPerformed
 
+    private void btnMuteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuteActionPerformed
+        mute = !mute;
+        Icon icon;
+        if(mute){
+            icon = new ImageIcon("src/jogovelha/imagem/Muted.png");
+        } else {
+            icon = new ImageIcon("src/jogovelha/imagem/Unmuted.png");
+        }
+        
+        btnMute.setIcon(icon);
+    }//GEN-LAST:event_btnMuteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -957,6 +1025,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     private javax.swing.JButton btn22;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnIniciar;
+    private javax.swing.JButton btnMute;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -971,6 +1040,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblJog1;
     private javax.swing.JLabel lblJog2;
     private javax.swing.JLabel lblLegenda;
+    private javax.swing.JLabel lblLegenda1;
     private javax.swing.JLabel lblMensagem;
     private javax.swing.JLabel lblNumPartida;
     private javax.swing.JLabel lblResultados;
