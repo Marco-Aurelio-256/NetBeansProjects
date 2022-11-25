@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/controle/JogoVelhaControle.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Resultados.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Tabuleiro.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Jogada.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/gui/JogoVelhaForm.java</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/META-INF/persistence.xml</file>
-            <file>file:/C:/Users/Aluno/Documents/GitHub/NetBeansProjects/JogoVelha-CabeçasDeBatatas/src/jogovelha/entidade/Jogador.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

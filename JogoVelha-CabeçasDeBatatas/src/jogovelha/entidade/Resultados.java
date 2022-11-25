@@ -62,7 +62,7 @@ public class Resultados implements Serializable {
         this.jogador2 = jogador2;
     }
     
-    public void encerrarConexaoDB(EntityManagerFactory emf, EntityManager em) {
+    public void encerrarConexaoDB() {
         em.close();
         emf.close();
     }
@@ -96,8 +96,12 @@ public class Resultados implements Serializable {
         }
     }
     
-    public void deletaResultado(Resultados resultados) throws Exception{
+    public void deletar(Resultados resultados) throws Exception{
         boolean transacaoOK = false;
+            
+        if(!em.contains(resultados)){
+            resultados = em.merge(resultados);
+        }
         
         try {
             em.getTransaction().begin();
@@ -113,7 +117,7 @@ public class Resultados implements Serializable {
             } else {
                 em.getTransaction().rollback();               
             }
-        }  
+        }
     }
     
     public Integer getNpartida() {

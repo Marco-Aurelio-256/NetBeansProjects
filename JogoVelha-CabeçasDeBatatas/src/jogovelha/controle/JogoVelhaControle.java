@@ -196,9 +196,14 @@ public class JogoVelhaControle {
         resultados.setJogador2(j2);
         
         resultados.criaResultado(resultados);
+        
+        resultados.encerrarConexaoDB();
     }
     
-    public void limparTabela(){
+    public void deletarResultado(Resultados resultados) throws Exception{
+        resultados.deletar(resultados);
+        
+        resultados.encerrarConexaoDB();
         
     }
     

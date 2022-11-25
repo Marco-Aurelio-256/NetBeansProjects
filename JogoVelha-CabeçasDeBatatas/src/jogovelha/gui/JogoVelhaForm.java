@@ -308,10 +308,32 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                 e.getMessage(),
                 "Erro!",
                 JOptionPane.INFORMATION_MESSAGE);
-        }            
+        }           
         
         jvc.setNumPartida(atualPartida);
         lblNumPartida.setText(atualPartida+"° Partida");
+    }
+    
+    public void limparResultados(){
+        Resultados resultados = new Resultados();
+        
+        try{
+            List<Resultados> list = resultados.retornarTodos();
+            
+            for(Iterator<Resultados> iterator = list.iterator(); iterator.hasNext();){
+                Resultados result = iterator.next();
+                jvc.deletarResultado(result);
+                
+            }
+            
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                e.getMessage(),
+                "Erro!",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }
     
     public void finalizarPartida() {
@@ -1013,7 +1035,7 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                     opcoes[1]);
             
             if(escolha == JOptionPane.YES_OPTION){
-                jvc.limparTabela();
+                limparResultados();
             }
             
         } else {
@@ -1024,6 +1046,8 @@ public final class JogoVelhaForm extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
             
         }
+        
+        atualizarTabela();
     }//GEN-LAST:event_btnLimpaResultadosActionPerformed
 
     /**
