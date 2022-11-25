@@ -12,3 +12,9 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\Aluno\Documents\GitHub\NetBeansProjects\JogoVelha-CabeçasDeBatatas\ApacheDerby\db
 Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Fri Nov 25 13:49:51 BRT 2022: Shutting down Derby engine
+----------------------------------------------------------------
+Fri Nov 25 13:49:51 BRT 2022:
+Encerrando a instância a816c00e-0184-af2a-6fa3-0000619b8f66
+----------------------------------------------------------------
